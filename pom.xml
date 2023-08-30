@@ -18,9 +18,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.openconext</groupId>
+  <groupId>uk.gov.laa</groupId>
   <artifactId>mujina</artifactId>
-  <version>8.0.2</version>
+  <version>1.0.0</version>
   <packaging>pom</packaging>
 
   <parent>
@@ -39,6 +39,12 @@
     <module>mujina-sp</module>
     <module>mujina-idp</module>
   </modules>
+
+  <scm>
+    <connection>scm:git:git://github.com:ministryofjustice/laa-ccms-caab-saml-mock.git</connection>
+    <developerConnection>scm:git:git@github.com:ministryofjustice/laa-ccms-caab-saml-mock.git</developerConnection>
+    <url>scm:git:git@github.com:ministryofjustice/laa-ccms-caab-saml-mock.git</url>
+  </scm>
 
   <repositories>
     <repository>
