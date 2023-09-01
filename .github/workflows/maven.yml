@@ -101,14 +101,10 @@ jobs:
           ref: task/create-helm-charts
           path: laa-ccms-caab-helm-charts
           token: ${{ secrets.REPO_TOKEN }}
-      - name: temporarily list directories
-        run: |
-          pwd
-          cd laa-ccms-caab-helm-charts/laa-ccms-caab-service
       - name: Update Helm Chart Values
         uses: Nextdoor/helm-set-image-tag-action@main
         with:
-          values_files: charts/laa-ccms-caab-saml-mock/Chart.yaml
+          values_files: /home/runner/work/laa-ccms-caab-saml-mock/laa-ccms-caab-saml-mock/laa-ccms-caab-helm-charts/laa-ccms-caab-service/charts/laa-ccms-caab-saml-mock/Chart.yaml
           tag_keys: .appVersion
           tag_value: 0.0.1b
           verbose: true
