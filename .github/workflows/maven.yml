@@ -101,4 +101,4 @@ jobs:
           ref: main
           fetch-depth: '0'
           path: laa-ccms-caab-helm-charts
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.REPO_TOKEN }}
