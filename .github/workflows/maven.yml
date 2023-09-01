@@ -101,6 +101,10 @@ jobs:
           ref: task/create-helm-charts
           path: laa-ccms-caab-helm-charts
           token: ${{ secrets.REPO_TOKEN }}
+      - name: initialise directory for git
+        run: |
+          cd /home/runner/work/laa-ccms-caab-saml-mock/laa-ccms-caab-saml-mock/laa-ccms-caab-helm-charts
+          git init
       - name: Update Helm Chart Values
         uses: Nextdoor/helm-set-image-tag-action@main
         with:
@@ -109,3 +113,4 @@ jobs:
           tag_value: 0.0.1b
           verbose: true
           dry: true
+          helm_docs: false
