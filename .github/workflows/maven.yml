@@ -98,6 +98,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: ministryofjustice/laa-ccms-caab-helm-charts
+          ref: main
           fetch-depth: '0'
           path: laa-ccms-caab-helm-charts
           token: ${{ secrets.GITHUB_TOKEN }}
