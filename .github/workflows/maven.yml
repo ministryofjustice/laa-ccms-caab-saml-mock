@@ -105,7 +105,7 @@ jobs:
       - name: Update Helm Chart Values
         uses: Nextdoor/helm-set-image-tag-action@main
         with:
-          values_files: laa-ccms-caab-service/charts/laa-ccms-caab-saml-mock/Chart.yaml
+          values_files: laa-ccms-caab-helm-charts/laa-ccms-caab-service/charts/laa-ccms-caab-saml-mock/Chart.yaml
           tag_keys: .version
           tag_value: 0.0.1
           commit_branch: task/create-helm-charts
