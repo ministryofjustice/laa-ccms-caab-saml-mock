@@ -102,7 +102,9 @@ jobs:
           path: laa-ccms-caab-helm-charts
           token: ${{ secrets.REPO_TOKEN }}
       - name: temporarily list directories
-        run: cd laa-ccms-caab-helm-charts/laa-ccms-caab-service
+        run: |
+          pwd
+          cd laa-ccms-caab-helm-charts/laa-ccms-caab-service
       - name: Update Helm Chart Values
         uses: Nextdoor/helm-set-image-tag-action@main
         with:
