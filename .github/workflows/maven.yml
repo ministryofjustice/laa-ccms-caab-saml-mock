@@ -107,6 +107,7 @@ jobs:
           yq eval-all '( .appVersion = "0.0.1b" )' -i Chart.yaml
           git config --global user.email "github@moj.com"
           git config --global user.name "GitHub Actions Bot"
+          git add .
           git commit -m "update appVersion to 0.0.1b"
           git push origin
           
