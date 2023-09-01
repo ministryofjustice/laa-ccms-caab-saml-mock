@@ -97,7 +97,7 @@ jobs:
       - name: Checkout charts repo
         uses: actions/checkout@v3
         with:
-          repository: ministryofjustice/laa-ccms-caab-helm-charts
+          repository: ministryofjustice:laa-ccms-caab-helm-charts
           fetch-depth: '0'
           path: laa-ccms-caab-helm-charts
-          token: ${{ github.token }}
+          token: ${{ secrets.GITHUB_TOKEN }}
