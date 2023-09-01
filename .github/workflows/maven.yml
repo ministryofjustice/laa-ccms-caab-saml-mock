@@ -100,3 +100,4 @@ jobs:
           repository: ministryofjustice/laa-ccms-caab-helm-charts
           fetch-depth: '0'
           path: laa-ccms-caab-helm-charts
+          token: ${{ github.token }}
