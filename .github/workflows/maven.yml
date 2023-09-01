@@ -98,7 +98,17 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: ministryofjustice/laa-ccms-caab-helm-charts
-          ref: main
+          ref: task/create-helm-charts
           fetch-depth: '0'
           path: laa-ccms-caab-helm-charts
           token: ${{ secrets.REPO_TOKEN }}
+      - name: Update Helm Chart Values
+        uses: Nextdoor/helm-set-image-tag-action@main
+        with:
+          values_files: laa-ccms-caab-service/charts/laa-ccms-caab-saml-mock/Chart.yaml
+          tag_keys: .version
+          tag_value: 0.0.1
+          commit_branch: task/create-helm-charts
+          commit_tag: 0.0.1-chart
+          verbose: true
+          dry: true
