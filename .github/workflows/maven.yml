@@ -125,3 +125,4 @@ jobs:
 #      - name: Apply the updated manifest
 #        run: kubectl -n ${KUBE_NAMESPACE} apply -f kubectl_deploy --namespace=laa-ccms-civil
 
+          token: ${{ github.token }}
