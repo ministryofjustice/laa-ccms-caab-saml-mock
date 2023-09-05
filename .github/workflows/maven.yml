@@ -69,8 +69,8 @@ jobs:
         id: login-ecr
       # Build and push docker image to container repo
       - run: |
-          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+          docker build -t $REGISTRY/$REPOSITORY:${IMAGE_TAG} .
+          docker push $REGISTRY/$REPOSITORY:${IMAGE_TAG}
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
@@ -98,11 +98,11 @@ jobs:
         run: |
           echo "$IMAGE_TAG"
           cd laa-ccms-caab-helm-charts/laa-ccms-caab-service/charts/laa-ccms-caab-saml-mock/
-          yq eval-all '( .appVersion = "$IMAGE_TAG" )' -i Chart.yaml
+          yq eval-all '( .appVersion = "${IMAGE_TAG}" )' -i Chart.yaml
           git config --global user.email "github@justice.gov.uk"
           git config --global user.name "GitHub Actions Bot"
           git add .
-          git commit -m "update appVersion to $IMAGE_TAG"
+          git commit -m "update appVersion to ${IMAGE_TAG}"
           git push origin
 
      
