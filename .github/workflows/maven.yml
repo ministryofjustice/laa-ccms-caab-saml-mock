@@ -53,7 +53,6 @@ jobs:
       id-token: write # for requesting jwt
       contents: read  # for actions/checkout
     steps:
-
       # Checkout github repo
       - name: checkout repo
         uses: actions/checkout@v3
@@ -75,7 +74,7 @@ jobs:
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-          IMAGE_TAG: ${{needs.define-image-tag.outputs.extact_tag_name}}
+          IMAGE_TAG: ${{ needs.define-image-tag.outputs.extact_tag_name }}
       - name: delete artifact
         uses: geekyeggo/delete-artifact@v2
         with:
@@ -95,7 +94,7 @@ jobs:
           token: ${{ secrets.REPO_TOKEN }}
       - name: update helm chart
         env:
-            IMAGE_TAG: ${{needs.define-image-tag.outputs.extract_tag_name}}
+            IMAGE_TAG: ${{ needs.define-image-tag.outputs.extract_tag_name }}
         run: |
           cd laa-ccms-caab-helm-charts/laa-ccms-caab-service/charts/laa-ccms-caab-saml-mock/
           yq eval-all '( .appVersion = "${{ env.TAG_NAME }}" )' -i Chart.yaml
