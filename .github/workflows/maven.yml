@@ -85,11 +85,11 @@ jobs:
       - name: update helm chart
         run: |
           cd laa-ccms-caab-helm-charts/laa-ccms-caab-service/charts/laa-ccms-caab-saml-mock/
-          yq eval-all '( .appVersion = "${TAG_NAME}" )' -i Chart.yaml
+          yq eval-all '( .appVersion = "$TAG_NAME" )' -i Chart.yaml
           git config --global user.email "github@justice.gov.uk"
           git config --global user.name "GitHub Actions Bot"
           git add .
-          git commit -m "update appVersion to ${TAG_NAME}"
+          git commit -m "update appVersion to $TAG_NAME"
           git push origin
 
      
