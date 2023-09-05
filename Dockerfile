@@ -14,4 +14,6 @@ USER 800
 RUN ls -l laa-ccms-caab-saml-mock.jar
 ENV TZ=Europe/London
 ENV JAVA_TOOL_OPTIONS="-XX:InitialRAMPercentage=50.0 -XX:MaxRAMPercentage=80.0"
+
+ENV IDP_BASE_URL="http://localhost:8081"
 CMD java -Djava.security.egd=file:/dev/./urandom -jar laa-ccms-caab-saml-mock.jar --spring.config.location=config/idp-application.yml
