@@ -81,7 +81,8 @@ jobs:
           name: saml-jar
 
   update-helm-chart:
-    needs: [ecr, define-image-tag]
+    if: ${{ github.ref_name == 'development' }}
+    needs: [define-image-tag]
     runs-on: ubuntu-latest
     environment: development
     steps:
@@ -98,7 +99,7 @@ jobs:
         run: |
           echo "$IMAGE_TAG"
           cd laa-ccms-caab-helm-charts/laa-ccms-caab-service/charts/laa-ccms-caab-saml-mock/
-          yq eval-all '( .appVersion = "${{ env.IMAGE_TAG }}" )' -i Chart.yaml
+          yq eval-all "( .appVersion = \"${{ env.IMAGE_TAG }}\" )" -i Chart.yaml
           git config --global user.email "github@justice.gov.uk"
           git config --global user.name "GitHub Actions Bot"
           git add .
