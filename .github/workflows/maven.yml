@@ -81,7 +81,7 @@ jobs:
           name: saml-jar
 
   update-helm-chart:
-    needs: [define-image-tag]
+    needs: [ecr, define-image-tag]
     runs-on: ubuntu-latest
     environment: development
     steps:
