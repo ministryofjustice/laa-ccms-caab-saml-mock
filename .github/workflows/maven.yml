@@ -5,8 +5,8 @@ name: CI caab-saml-mock
 
 on:
   push:
-#    branches:
-#      - main
+    branches:
+      - main
 
 jobs:
   define-image-tag:
