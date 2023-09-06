@@ -68,7 +68,8 @@ jobs:
       - uses: aws-actions/amazon-ecr-login@v1
         id: login-ecr
       # Build and push docker image to container repo
-      - run: |
+      - name: docker build and push
+        run: |
           docker build -t $REGISTRY/$REPOSITORY:${{ env.IMAGE_TAG }} .
           docker push $REGISTRY/$REPOSITORY:${{ env.IMAGE_TAG }}
         env:
