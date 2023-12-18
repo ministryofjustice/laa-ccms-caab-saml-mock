@@ -345,4 +345,3 @@ curl -v -H "Accept: application/json" \
         -X PUT -d "http://localhost:8080/SingleSignOnService/vo:test" \
         http://localhost:9090/api/ssoServiceURL
 ```
- 
