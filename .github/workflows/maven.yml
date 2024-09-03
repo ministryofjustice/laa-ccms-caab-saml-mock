@@ -61,7 +61,7 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v3
       - name: download jar
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: saml-jar
       - uses: aws-actions/configure-aws-credentials@v2
