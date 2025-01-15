@@ -66,8 +66,8 @@ jobs:
           name: saml-jar
       - uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: ${{ secrets.DEV_ECR_ROLE_TO_ASSUME }}
-          aws-region: ${{ vars.DEV_ECR_REGION }}
+          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ vars.ECR_REGION }}
       # Login to container repo
       - uses: aws-actions/amazon-ecr-login@v1
         id: login-ecr
@@ -78,7 +78,7 @@ jobs:
           docker push $REGISTRY/$REPOSITORY:${{ env.IMAGE_TAG }}
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: ${{ vars.DEV_ECR_REPOSITORY }}
+          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           IMAGE_TAG: ${{ needs.define-image-tag.outputs.tag_name }}
       - name: delete artifact
         uses: geekyeggo/delete-artifact@v2
@@ -102,7 +102,7 @@ jobs:
             IMAGE_TAG: ${{ needs.define-image-tag.outputs.tag_name }}
         run: |
           echo "$IMAGE_TAG"
-          cd laa-ccms-caab-helm-charts/laa-ccms-caab-service/charts/laa-ccms-caab-saml-mock/
+          cd laa-ccms-caab-helm-charts/laa-ccms-caab-service/charts/caab-saml-mock/
           yq eval-all "( .appVersion = \"${{ env.IMAGE_TAG }}\" )" -i Chart.yaml
           git config --global user.email "github@justice.gov.uk"
           git config --global user.name "GitHub Actions Bot"
