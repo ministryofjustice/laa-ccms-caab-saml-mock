@@ -7,7 +7,7 @@ on:
   push:
     branches:
       - main
-
+ 
 jobs:
   define-image-tag:
     runs-on: ubuntu-latest
