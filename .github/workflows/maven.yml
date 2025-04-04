@@ -24,7 +24,6 @@ jobs:
         run: echo "tag_name=${{ steps.extract_repo_name.outputs.repo_name }}-${GITHUB_SHA::8}" >> $GITHUB_OUTPUT
         id: extract_tag_name
 
-
   build:
     runs-on: ubuntu-latest
     environment: development
@@ -86,30 +85,17 @@ jobs:
           name: saml-jar
 
   update-helm-chart:
-    needs: [ecr, define-image-tag]
-    runs-on: ubuntu-latest
-    environment: development
-    steps:
-      - name: Checkout charts repo
-        uses: actions/checkout@v4
-        with:
-          repository: ministryofjustice/laa-ccms-caab-helm-charts
-          ref: development
-          path: laa-ccms-caab-helm-charts
-          token: ${{ secrets.REPO_TOKEN }}
-      - name: update helm chart
-        env:
-            IMAGE_TAG: ${{ needs.define-image-tag.outputs.tag_name }}
-        run: |
-          echo "$IMAGE_TAG"
-          cd laa-ccms-caab-helm-charts/laa-ccms-caab-service/charts/caab-saml-mock/
-          yq eval-all "( .appVersion = \"${{ env.IMAGE_TAG }}\" )" -i Chart.yaml
-          git config --global user.email "github@justice.gov.uk"
-          git config --global user.name "GitHub Actions Bot"
-          git add .
-          git commit -m "update appVersion to ${{ env.IMAGE_TAG }}"
-          git push origin
-
-     
-
-      
+    needs: [ ecr, define-image-tag ]
+    uses: ministryofjustice/laa-ccms-common-workflows/.github/workflows/update-helm-chart.yml@v1
+    with:
+      helm_charts_repository: 'laa-ccms-caab-helm-charts'
+      helm_charts_branch: 'development'
+      service_name: 'laa-ccms-caab-service'
+      subchart_name: 'caab-saml-mock'
+      application_version: ${{ needs.define-image-tag.outputs.tag_name }}
+      github_bot_username: 'laa-ccms-caab-service'
+    secrets:
+      gh_token: ${{ secrets.GITHUB_TOKEN }}
+      github_app_id: ${{ vars.LAA_CCMS_CAAB_SERVICE_APP_ID }}
+      github_app_private_key: ${{ secrets.LAA_CCMS_CAAB_SERVICE_KEY }}
+      github_app_organisation: 'ministryofjustice'
