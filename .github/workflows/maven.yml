@@ -7,7 +7,7 @@ on:
   push:
     branches:
       - main
- 
+
 jobs:
   define-image-tag:
     runs-on: ubuntu-latest
@@ -29,9 +29,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: development
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up JDK 17
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
@@ -44,7 +44,7 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: upload jarfile
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: saml-jar
         path: mujina-idp/target/laa-ccms-caab-saml-mock-1.0.0.jar
@@ -59,17 +59,17 @@ jobs:
     steps:
       # Checkout github repo
       - name: checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: download jar
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: saml-jar
-      - uses: aws-actions/configure-aws-credentials@v2
+      - uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
           aws-region: ${{ vars.ECR_REGION }}
       # Login to container repo
-      - uses: aws-actions/amazon-ecr-login@v1
+      - uses: aws-actions/amazon-ecr-login@v2
         id: login-ecr
       # Build and push docker image to container repo
       - name: docker build and push
@@ -81,7 +81,7 @@ jobs:
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           IMAGE_TAG: ${{ needs.define-image-tag.outputs.tag_name }}
       - name: delete artifact
-        uses: geekyeggo/delete-artifact@v2
+        uses: geekyeggo/delete-artifact@v5
         with:
           name: saml-jar
 
@@ -91,7 +91,7 @@ jobs:
     environment: development
     steps:
       - name: Checkout charts repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: ministryofjustice/laa-ccms-caab-helm-charts
           ref: development
