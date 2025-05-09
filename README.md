@@ -10,7 +10,7 @@
   Configurable Identity and Service Provider built with OpenSAML & Java Spring Boot
 </pre>
 
-Mujina
+Mujina 
 ======
 
 [![Build Status](https://travis-ci.org/OpenConext/Mujina.svg)](https://travis-ci.org/OpenConext/Mujina)
