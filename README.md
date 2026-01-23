@@ -10,6 +10,8 @@
   Configurable Identity and Service Provider built with OpenSAML & Java Spring Boot
 </pre>
 
+[![Ministry of Justice Repository Compliance Badge](https://github-community.service.justice.gov.uk/repository-standards/api/laa-ccms-caab-saml-mock/badge)](https://github-community.service.justice.gov.uk/repository-standards/laa-ccms-caab-saml-mock)
+
 Mujina 
 ======
 
@@ -345,3 +347,6 @@ curl -v -H "Accept: application/json" \
         -X PUT -d "http://localhost:8080/SingleSignOnService/vo:test" \
         http://localhost:9090/api/ssoServiceURL
 ```
+
+## Contributing
+Follow the [contribution guide](./CONTRIBUTING.md) to make code changes.
