@@ -28,9 +28,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: development
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
     - name: Set up JDK 17
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
       with:
         java-version: '17'
         distribution: 'temurin'
@@ -43,7 +43,7 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: upload jarfile
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
       with:
         name: saml-jar
         path: mujina-idp/target/laa-ccms-caab-saml-mock-1.0.0.jar
@@ -58,17 +58,17 @@ jobs:
     steps:
       # Checkout github repo
       - name: checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: download jar
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: saml-jar
-      - uses: aws-actions/configure-aws-credentials@v4
+      - uses: aws-actions/configure-aws-credentials@8df5847569e6427dd6c4fb1cf565c83acfa8afa7 # v6.0.0
         with:
           role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
           aws-region: ${{ vars.ECR_REGION }}
       # Login to container repo
-      - uses: aws-actions/amazon-ecr-login@v2
+      - uses: aws-actions/amazon-ecr-login@062b18b96a7aff071d4dc91bc00c4c1a7945b076 # v2.0.1
         id: login-ecr
       # Build and push docker image to container repo
       - name: docker build and push
@@ -80,13 +80,13 @@ jobs:
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           IMAGE_TAG: ${{ needs.define-image-tag.outputs.tag_name }}
       - name: delete artifact
-        uses: geekyeggo/delete-artifact@v5
+        uses: geekyeggo/delete-artifact@176a747ab7e287e3ff4787bf8a148716375ca118 # v6.0.0
         with:
           name: saml-jar
 
   update-helm-chart:
     needs: [ ecr, define-image-tag ]
-    uses: ministryofjustice/laa-ccms-common-workflows/.github/workflows/update-helm-chart.yml@v1
+    uses: ministryofjustice/laa-ccms-common-workflows/.github/workflows/update-helm-chart.yml@v2
     with:
       helm_charts_repository: 'laa-ccms-caab-helm-charts'
       helm_charts_branch: 'development'
