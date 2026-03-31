@@ -1,6 +1,6 @@
 FROM eclipse-temurin:17
 VOLUME /tmp
-COPY laa-ccms-caab-saml-mock-1.0.0.jar laa-ccms-caab-saml-mock.jar
+COPY mujina-idp/target/laa-ccms-caab-saml-mock-1.0.0.jar laa-ccms-caab-saml-mock.jar
 COPY docker-idp-application.yml config/idp-application.yml
 COPY mujina-idp/src/main/resources/saml-attributes.json config/saml-attributes.json
 EXPOSE 8080
