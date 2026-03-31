@@ -1,12 +1,12 @@
 # This workflow will build a Java project with Maven
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-name: CI caab-saml-mock - test
+name: CI caab-saml-mock
 
 on:
   push:
     branches:
-      - remove-delete-artifact
+      - main
 
 jobs:
   define-image-tag:
@@ -27,7 +27,7 @@ jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
     environment: development
-    needs: [define-image-tag]
+    needs: [ define-image-tag ]
     permissions:
       id-token: write # for requesting jwt
       contents: read  # for actions/checkout
@@ -51,8 +51,25 @@ jobs:
       # Build and push docker image to container repo
       - name: docker build and push
         run: |
-          docker build -t $REGISTRY/$REPOSITORY:${{ env.IMAGE_TAG }}-SNAPSHOT .
+          docker build -t $REGISTRY/$REPOSITORY:${{ env.IMAGE_TAG }} .
+          docker push $REGISTRY/$REPOSITORY:${{ env.IMAGE_TAG }}
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           IMAGE_TAG: ${{ needs.define-image-tag.outputs.tag_name }}
+
+  update-helm-chart:
+    needs: [ build-and-push-image ]
+    uses: ministryofjustice/laa-ccms-common-workflows/.github/workflows/update-helm-chart.yml@v1
+    with:
+      helm_charts_repository: 'laa-ccms-caab-helm-charts'
+      helm_charts_branch: 'development'
+      service_name: 'laa-ccms-caab-service'
+      subchart_name: 'caab-saml-mock'
+      application_version: ${{ needs.define-image-tag.outputs.tag_name }}
+      github_bot_username: 'laa-ccms-caab-service'
+    secrets:
+      gh_token: ${{ secrets.GITHUB_TOKEN }}
+      github_app_id: ${{ vars.LAA_CCMS_CAAB_SERVICE_APP_ID }}
+      github_app_private_key: ${{ secrets.LAA_CCMS_CAAB_SERVICE_KEY }}
+      github_app_organisation: 'ministryofjustice'
