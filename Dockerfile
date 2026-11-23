@@ -1,4 +1,5 @@
-FROM eclipse-temurin:17
+FROM ghcr.io/ministryofjustice/laa-base-container-images/java:17-corretto-alpine
+
 VOLUME /tmp
 COPY mujina-idp/target/laa-ccms-caab-saml-mock-1.0.0.jar laa-ccms-caab-saml-mock.jar
 COPY docker-idp-application.yml config/idp-application.yml
